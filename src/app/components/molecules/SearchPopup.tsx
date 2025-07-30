@@ -58,7 +58,7 @@ const SearchPopup = () => {
         <div className="container mx-auto">
           <div
             ref={popupRef}
-            className="fixed z-50 left-1/2 transform -translate-x-1/2  mt-2 w-full md:w-1/2 lg:w-1/3 bg-white border border-gray-200 rounded-xl shadow-lg px-4 py-6"
+            className="fixed z-50 left-1/2 transform -translate-x-1/2  mt-2 w-full md:w-1/2 lg:w-1/3 bg-white border border-gray-200 rounded-md shadow-lg px-4 py-6"
           >
             <div className="flex items-center space-x-2">
               <input
