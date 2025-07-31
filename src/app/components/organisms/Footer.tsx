@@ -11,7 +11,7 @@ const Footer = () => {
           <SocialMedia />
         </div>
       </div>
-      <div className="bg-gray-700 text-white">
+      <div className="bg-gray-800 text-white">
         <div className="container mx-auto py-2 flex items-center gap-5 justify-center">
           <p className="text-sm">Omar Samir &copy; {year}</p>
           <span>|</span>
