@@ -1,32 +1,47 @@
-import { Link } from "lucide-react";
 import Image from "next/image";
 import Badge from "../atoms/Badge";
+import { articleProps } from "@/app/types/Article";
+import Link from "next/link";
+import useFormattedDate from "@/app/hooks/useFormattedDate";
 
-const FirstArticle = () => {
+const FirstArticle = ({
+  urlToImage,
+  name,
+  title,
+  id,
+  publishedAt,
+  author,
+}: articleProps) => {
+  const { date, time } = useFormattedDate(publishedAt!);
   return (
-    <div className="flex flex-col gap-2 h-full">
-      <div className="min-h-full">
+    <div className="flex flex-col gap-2 h-full pb-5">
+      {/* Image container */}
+      <div className="relative w-full h-[95%] overflow-hidden rounded-md">
         <Image
-          src="/images/first-article.png"
-          alt="First Article"
+          src={urlToImage}
+          alt={title}
           width={500}
           height={500}
-          className="relative !w-full !h-full object-cover hover:scale-110 duration-500 transition-transform "
+          unoptimized
+          className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
         />
         <div className="absolute top-5 left-0 z-10">
-          <Badge title="Primary" category="primary" />
+          <Badge title={name} category={name} />
         </div>
       </div>
-      <Link
-        href="/article/first-article"
-        className="text-xl font-bold hover:text-gray-400 hover:underline duration-200 transition-all"
-      >
-        First Article
-      </Link>
-      <div className="flex gap-2 justify-between text-gray-400 capitalize">
-        <span>By</span>
-        <span>May 1, 2023</span>
-        <span>5 min read</span>
+
+      {/* Article info */}
+      <div>
+        <Link
+          href={`/article/${id}`}
+          className="text-xl font-bold hover:text-gray-400 hover:underline duration-200 transition-all"
+        >
+          {title}
+        </Link>
+        <div className="flex justify-between text-gray-400 capitalize text-sm mt-1">
+          <span>By: {author}</span>
+          <span>{date} at {time}</span>
+        </div>
       </div>
     </div>
   );

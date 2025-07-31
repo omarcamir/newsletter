@@ -1,7 +1,10 @@
+import TopInUS from "../organisms/TopInUS"
 
 const HomeContent = () => {
   return (
-    <div>HomeContent</div>
+    <div className="py-10">
+      <TopInUS/>
+    </div>
   )
 }
 

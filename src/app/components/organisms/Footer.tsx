@@ -5,14 +5,16 @@ const Footer = () => {
   const year = new Date().getFullYear();
   return (
     <footer>
-      <div className="container mx-auto bg-gray-900 text-white py-10">
-        <Logo />
-        <div className="mt-4">
-          <SocialMedia />
+      <div className="bg-gray-900 ">
+        <div className=" container mx-auto text-white py-10">
+          <Logo />
+          <div className="mt-4">
+            <SocialMedia />
+          </div>
         </div>
       </div>
       <div className="bg-gray-800 text-white">
-        <div className="container mx-auto py-2 flex items-center gap-5 justify-center">
+        <div className="py-2 flex items-center gap-5 justify-center">
           <p className="text-sm">Omar Samir &copy; {year}</p>
           <span>|</span>
           <SocialMedia />

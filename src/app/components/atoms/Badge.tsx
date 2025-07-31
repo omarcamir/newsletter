@@ -1,17 +1,28 @@
+import React from "react";
+
 type BadgeProps = { title: string; category: string };
 
-const categoryStyles: Record<string, string> = {
-  primary: "bg-blue-500",
-  secondary: "bg-gray-500",
-  success: "bg-green-500",
-  warning: "bg-yellow-500",
-  danger: "bg-red-500",
+const colorClasses = [
+  "bg-blue-500",
+  "bg-gray-500",
+  "bg-green-500",
+  "bg-yellow-500",
+  "bg-red-500",
+  "bg-purple-500",
+  "bg-pink-500",
+  "bg-indigo-500",
+];
+
+const getRandomColorClass = () => {
+  const randomIndex = Math.floor(Math.random() * colorClasses.length);
+  return colorClasses[randomIndex];
 };
 
-const Badge = ({ title, category }: BadgeProps) => {
-  const bgClass = categoryStyles[category] || "bg-gray-300"; // fallback if category not found
+const Badge = ({ title }: BadgeProps) => {
+  const bgClass = getRandomColorClass();
+
   return (
-    <div className={`${bgClass} text-white px-2 py-1 rounded`}>{title}</div>
+    <span className={`${bgClass} text-white px-2 py-1 rounded text-xs`}>{title}</span>
   );
 };
 
