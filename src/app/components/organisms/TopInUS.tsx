@@ -11,7 +11,7 @@ const TopInUS = () => {
   return (
     <section className="container mx-auto py-10">
       <h2 className="text-xl md:text-2xl xl:text-3xl font-bold mb-3">Top headlines in the US</h2>
-      <div className="grid grid-cols-1 lg:grid-cols-5 gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
         <div
           className="col-span-1 lg:col-span-3"
           key={

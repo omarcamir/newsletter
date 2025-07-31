@@ -6,13 +6,13 @@ const Header = () => {
   const today = new Date().toUTCString();
   return (
     <>
-      <div className="bg-gray-900 text-white">
+      <div className="bg-gray-900 text-white z-50">
         <div className="container mx-auto py-2 flex justify-between">
           <p className="text-xs">{today}</p>
           <SocialMedia />
         </div>
       </div>
-      <div className="!sticky top-0 bg-white shadow-sm">
+      <div className="!sticky top-0 bg-white shadow-sm z-50">
         <div className="container mx-auto py-4 flex items-center justify-between gap-5">
           <Logo />
           <SearchPopup />
