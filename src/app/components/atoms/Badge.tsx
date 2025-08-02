@@ -22,7 +22,7 @@ const Badge = ({ title }: BadgeProps) => {
   const bgClass = getRandomColorClass();
 
   return (
-    <span className={`${bgClass} text-white px-2 py-1 rounded text-xs`}>{title}</span>
+    <span className={`${bgClass} text-white px-2 py-1 text-xs`}>{title}</span>
   );
 };
 

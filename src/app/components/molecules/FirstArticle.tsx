@@ -18,7 +18,7 @@ const FirstArticle = ({
       {/* Image container */}
       <div className="relative w-full h-[95%] overflow-hidden rounded-md">
         <Image
-          src={urlToImage}
+          src={urlToImage || "/brokenimage.jpg"}
           alt={title}
           width={500}
           height={500}

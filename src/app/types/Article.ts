@@ -23,3 +23,15 @@ export type articleAPiProps = {
   url?: string;
   urlToImage: string;
 };
+
+export type guardianApiProps = {
+  id: number;
+  sectionId: number;
+  sectionName: string;
+  webPublicationDate: string;
+  webTitle: string;
+  webUrl: string;
+  fields: {
+    thumbnail: string;
+  };
+} 

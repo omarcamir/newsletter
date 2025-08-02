@@ -15,23 +15,25 @@ const Article = ({
     
   return (
     <div className="grid grid-cols-3 gap-2 h-full">
-      <div className="col-span-1 h-20 w-20 overflow-hidden rounded-md">
+      <div className="col-span-1 h-28 md:w-28 xl:w-32 overflow-hidden rounded-md">
         <Image
-          src={urlToImage}
+          src={urlToImage || "/brokenimage.jpg"}
           alt={title}
           width={500}
-          height={500}
+          height={700}
           unoptimized
           className="!w-full !h-full object-cover hover:scale-110 duration-500 transition-transform z-0 shadow-sm"
         />
       </div>
       <div className="col-span-2 flex flex-col gap-2 justify-between">
-        <Badge title={name} category={name} />
+        <div>
+          <Badge title={name} category={name} />
+        </div>
         <Link
           href={url!}
           className="text-md xl:text-xl font-bold hover:text-gray-400 hover:underline duration-200 transition-all"
         >
-          {title?.length > 25 ? title.slice(0, 25) + "..." : title}
+          {title?.length > 35 ? title.slice(0, 35) + "..." : title}
         </Link>
         <div className=" text-gray-400 capitalize">
           <span>{date} at {time}</span>
