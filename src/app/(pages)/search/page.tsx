@@ -1,4 +1,5 @@
 "use client";
+import Loader from "@/app/components/atoms/Loader";
 import Article from "@/app/components/molecules/Article";
 import Pagination from "@/app/components/molecules/Pagination";
 import { useSearchArticlesQuery } from "@/app/rtkQuery/services/guardianApi";
@@ -19,7 +20,7 @@ const Search = () => {
     <div className="py-10">
       <div className="container mx-auto">
         {searchLoading ? (
-          <p>Loading...</p>
+          <Loader/>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {searchData?.response.results.map((article: guardianApiProps) => (
@@ -28,7 +29,7 @@ const Search = () => {
                 urlToImage={article.fields.thumbnail}
                 name={article.sectionName}
                 title={article.webTitle}
-                url={`article/${article.id}`}
+                url={`/article/${encodeURIComponent(article.id)}`}
                 publishedAt={article.webPublicationDate}
               />
             ))}

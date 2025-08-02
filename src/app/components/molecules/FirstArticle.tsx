@@ -25,27 +25,30 @@ const FirstArticle = ({
           unoptimized
           className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
         />
-        <div className="absolute top-5 left-0 z-10">
-          <Badge title={name} category={name} />
-        </div>
+        {name && (
+          <div className="absolute top-5 left-0 z-10">
+            <Badge title={name} category={name} />
+          </div>
+        )}
       </div>
 
       {/* Article info */}
       <div>
-        {
-          url ?
+        {url ? (
           <Link
-          href={url!}
-          className="text-xl font-bold hover:text-gray-400 hover:underline duration-200 transition-all"
-        >
-          {title}
-        </Link>
-        :
-        <h2 className="text-xl font-bold">{title}</h2>
-      }
+            href={url!}
+            className="text-xl font-bold hover:text-gray-400 hover:underline duration-200 transition-all"
+          >
+            {title}
+          </Link>
+        ) : (
+          title && <h2 className="text-xl font-bold">{title}</h2>
+        )}
         <div className="flex justify-between text-gray-400 capitalize text-sm mt-1">
           {author && <span>By: {author}</span>}
-          <span>{date} at {time}</span>
+          <span>
+            {date && date} at {time && time}
+          </span>
         </div>
       </div>
     </div>

@@ -1,4 +1,5 @@
 "use client";
+import Loader from "@/app/components/atoms/Loader";
 import FirstArticle from "@/app/components/molecules/FirstArticle";
 import { useTopHeadlinesQuery } from "@/app/rtkQuery/services/newsApi";
 import { articleAPiProps } from "@/app/types/Article";
@@ -17,7 +18,7 @@ const NewsDetails = () => {
     <div className="py-10">
       <div className="container mx-auto">
         {TopUSLoading ? (
-          <p>Loading...</p>
+          <Loader/>
         ) : (
           <FirstArticle
             urlToImage={filteredArticle?.[0]?.urlToImage}
