@@ -50,7 +50,7 @@ const TopInUS = () => {
                     urlToImage={article.urlToImage}
                     name={article?.source.name}
                     title={article?.title}
-                    url={`/news/${article?.title}`}
+                    url={`/news/${encodeURIComponent(article.title.trim())}`}
                     publishedAt={article.publishedAt}
                   />
                 </div>

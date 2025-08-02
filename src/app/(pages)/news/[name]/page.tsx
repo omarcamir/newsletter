@@ -1,4 +1,5 @@
 "use client";
+
 import Loader from "@/app/components/atoms/Loader";
 import FirstArticle from "@/app/components/molecules/FirstArticle";
 import { useTopHeadlinesQuery } from "@/app/rtkQuery/services/newsApi";
@@ -6,32 +7,36 @@ import { articleAPiProps } from "@/app/types/Article";
 import { useParams } from "next/navigation";
 
 const NewsDetails = () => {
-  const { data: TopUSData, isLoading: TopUSLoading } =
-    useTopHeadlinesQuery({ country: "us" })
+  const { name } = useParams();
+  const titleFromUrl = name as string;
 
-  const {name} = useParams();
-  const decodedTitle = decodeURIComponent(name as string);
-  const filteredArticle = TopUSData?.articles?.filter(
-    (article: articleAPiProps) => article.title === decodedTitle
-  );
+
+  const { data: TopUSData, isLoading: TopUSLoading } = useTopHeadlinesQuery({ country: "us" });
+
+  const filteredArticle = TopUSData?.articles?.find(
+  (article: articleAPiProps) =>
+    encodeURIComponent(article.title.trim().toLowerCase()) === titleFromUrl.toLowerCase()
+);
+
+
   return (
     <div className="py-10">
       <div className="container mx-auto">
         {TopUSLoading ? (
-          <Loader/>
+          <Loader />
         ) : (
           <FirstArticle
-            urlToImage={filteredArticle?.[0]?.urlToImage}
-            name={filteredArticle?.[0]?.source.name}
-            title={filteredArticle?.[0]?.title}
-            id={filteredArticle?.[0]?.title}
-            publishedAt={filteredArticle?.[0]?.publishedAt}
-            author={filteredArticle?.[0]?.author}
+            urlToImage={filteredArticle?.urlToImage}
+            name={filteredArticle?.source.name}
+            title={filteredArticle?.title}
+            id={filteredArticle?.title}
+            publishedAt={filteredArticle?.publishedAt}
+            author={filteredArticle?.author}
           />
         )}
         <div className="py-5">
-          <p>{filteredArticle?.[0]?.content}</p>
-          <p>{filteredArticle?.[0]?.description}</p>
+          <p>{filteredArticle?.content}</p>
+          <p>{filteredArticle?.description}</p>
         </div>
       </div>
     </div>
