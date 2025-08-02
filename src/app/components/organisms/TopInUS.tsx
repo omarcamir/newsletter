@@ -7,7 +7,7 @@ import Loader from "../atoms/Loader";
 
 const TopInUS = () => {
   const { data: TopUSData, isLoading: TopUSLoading } =
-    useTopHeadlinesQuery("us");
+    useTopHeadlinesQuery({ country: "us" })
   // console.log("data", TopUSData);
   return (
     <section className="container mx-auto py-10">
@@ -40,7 +40,7 @@ const TopInUS = () => {
             <Loader />
           ) : (
             TopUSData?.articles.map((article: articleAPiProps, index: number) =>
-              index === 0 ? null : index > 5 ? null : (
+              index > 0 && index < 6 ?  (
                 <div
                   className="col-span-1"
                   key={article?.source.id + article?.title}
@@ -55,6 +55,7 @@ const TopInUS = () => {
                   />
                 </div>
               )
+              : null
             )
           )}
         </div>

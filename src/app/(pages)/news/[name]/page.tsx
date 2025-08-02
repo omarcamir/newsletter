@@ -7,7 +7,7 @@ import { useParams } from "next/navigation";
 
 const NewsDetails = () => {
   const { data: TopUSData, isLoading: TopUSLoading } =
-    useTopHeadlinesQuery("us");
+    useTopHeadlinesQuery({ country: "us" })
 
   const {name} = useParams();
   const decodedTitle = decodeURIComponent(name as string);
