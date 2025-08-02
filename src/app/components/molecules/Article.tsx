@@ -8,7 +8,7 @@ const Article = ({
   urlToImage,
   name,
   title,
-  id,
+  url,
   publishedAt,
 }: articleProps) => {
       const { date, time } = useFormattedDate(publishedAt!);
@@ -28,7 +28,7 @@ const Article = ({
       <div className="col-span-2 flex flex-col gap-2 justify-between">
         <Badge title={name} category={name} />
         <Link
-          href={`/article/${id}`}
+          href={url!}
           className="text-md xl:text-xl font-bold hover:text-gray-400 hover:underline duration-200 transition-all"
         >
           {title?.length > 25 ? title.slice(0, 25) + "..." : title}

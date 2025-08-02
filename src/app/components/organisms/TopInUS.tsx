@@ -7,7 +7,7 @@ import FirstArticle from "../molecules/FirstArticle";
 const TopInUS = () => {
   const { data: TopUSData, isLoading: TopUSLoading } =
     useTopHeadlinesQuery("us");
-  console.log("data", TopUSData);
+  // console.log("data", TopUSData);
   return (
     <section className="container mx-auto py-10">
       <h2 className="text-xl md:text-2xl xl:text-3xl font-bold mb-3">Top headlines in the US</h2>
@@ -22,7 +22,8 @@ const TopInUS = () => {
             urlToImage={TopUSData?.articles[0]?.urlToImage}
             name={TopUSData?.articles[0]?.source.name}
             title={TopUSData?.articles[0]?.title}
-            id={TopUSData?.articles[0]?.source.id}
+            id={TopUSData?.articles[0]?.title}
+            url={`/news/${TopUSData?.articles[0]?.title}`}
             publishedAt={TopUSData?.articles[0]?.publishedAt}
             author={TopUSData?.articles[0]?.author}
           />
@@ -42,7 +43,7 @@ const TopInUS = () => {
                   urlToImage={article.urlToImage}
                   name={article?.source.name}
                   title={article?.title}
-                  id={article?.source.id}
+                  url={`/news/${article?.title}`}
                   publishedAt={article.publishedAt}
                 />
               </div>

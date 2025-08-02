@@ -8,7 +8,7 @@ const FirstArticle = ({
   urlToImage,
   name,
   title,
-  id,
+  url,
   publishedAt,
   author,
 }: articleProps) => {
@@ -32,14 +32,19 @@ const FirstArticle = ({
 
       {/* Article info */}
       <div>
-        <Link
-          href={`/article/${id}`}
+        {
+          url ?
+          <Link
+          href={url!}
           className="text-xl font-bold hover:text-gray-400 hover:underline duration-200 transition-all"
         >
           {title}
         </Link>
+        :
+        <h2 className="text-xl font-bold">{title}</h2>
+      }
         <div className="flex justify-between text-gray-400 capitalize text-sm mt-1">
-          <span>By: {author}</span>
+          {author && <span>By: {author}</span>}
           <span>{date} at {time}</span>
         </div>
       </div>

@@ -3,7 +3,7 @@ export type articleProps = {
   content?: string;
   description?: string;
   publishedAt?: string;
-  id: string;
+  id?: string;
   name: string;
   title: string;
   url?: string;
