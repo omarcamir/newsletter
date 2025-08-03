@@ -38,41 +38,39 @@ const SearchPopup = () => {
   };
 
   // GSAP animation
-useEffect(() => {
-  const el = popupRef.current;
-  if (!el) return;
+  useEffect(() => {
+    const el = popupRef.current;
+    if (!el) return;
 
-  if (isOpen) {
-    gsap.fromTo(
-      el,
-      { opacity: 0, scale: 0.95, y: -10 },
-      {
-        opacity: 1,
-        scale: 1,
-        y: 0,
-        duration: 0.4,
+    if (isOpen) {
+      gsap.set(el, { display: "block" }); // Show immediately before animating
+      gsap.fromTo(
+        el,
+        { opacity: 0, scale: 0.95, y: -10 },
+        {
+          opacity: 1,
+          scale: 1,
+          y: 0,
+          duration: 0.4,
+          ease: "power2.inOut",
+          onComplete: () => {
+            inputRef.current?.focus();
+          },
+        }
+      );
+    } else {
+      gsap.to(el, {
+        opacity: 0,
+        scale: 0.95,
+        y: -10,
+        duration: 0.3,
         ease: "power2.inOut",
-        display: "block",
         onComplete: () => {
-          // Focus the input AFTER animation is complete
-          inputRef.current?.focus();
+          el.style.display = "none";
         },
-      }
-    );
-  } else {
-    gsap.to(el, {
-      opacity: 0,
-      scale: 0.8,
-      y: -10,
-      duration: 0.3,
-      ease: "power2.inOut",
-      onComplete: () => {
-        if (el) el.style.display = "none";
-      },
-    });
-  }
-}, [isOpen]);
-
+      });
+    }
+  }, [isOpen]);
 
   return (
     <div>
@@ -96,12 +94,12 @@ useEffect(() => {
         onClick={() => setIsOpen(false)}
       />
 
-      {/* Popup (always rendered for GSAP control) */}
+      {/* Popup */}
       <div className="container mx-auto">
         <div
           ref={popupRef}
           style={{ display: "none" }}
-          className="fixed z-50 left-1/2 top-20 transform -translate-x-1/2 w-full md:w-1/2 lg:w-1/3 bg-white border border-gray-200 rounded-md shadow-lg px-4 py-6"
+          className="fixed z-50 top-20 left-0 right-0 mx-auto w-full md:w-1/2 lg:w-1/3 bg-white border border-gray-200 rounded-md shadow-lg px-4 py-6"
         >
           <div className="flex items-center space-x-2">
             <input
@@ -110,7 +108,6 @@ useEffect(() => {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-              // autoFocus
               placeholder="Type your search..."
               className="flex-1 border border-gray-300 px-3 py-2 rounded-md focus:outline-none"
             />

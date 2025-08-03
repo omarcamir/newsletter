@@ -20,7 +20,7 @@ const Pagination = ({ page, setPage, totalPages }: PaginationProps) => {
       <Button
         onClick={() => setPage((p) => p + 1)}
         title="Next"
-        disabled={page === totalPages}
+        disabled={page === totalPages || totalPages === 0}
       />
     </div>
   );
