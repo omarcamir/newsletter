@@ -19,7 +19,7 @@ const FirstArticle = ({
       <div className="relative w-full h-[95%] overflow-hidden rounded-md">
         <Image
           src={urlToImage || "/brokenimage.jpg"}
-          alt={title}
+          alt={title || "article"}
           width={500}
           height={500}
           unoptimized

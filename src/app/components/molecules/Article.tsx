@@ -17,7 +17,7 @@ const Article = ({
       <div className="col-span-1 h-28 md:w-28 xl:w-32 overflow-hidden rounded-md">
         <Image
           src={urlToImage || "/brokenimage.jpg"}
-          alt={title}
+          alt={title || "article"}
           width={500}
           height={700}
           unoptimized

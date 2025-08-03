@@ -8,36 +8,37 @@ import { useParams } from "next/navigation";
 
 const NewsDetails = () => {
   const { name } = useParams();
-  const titleFromUrl = name as string;
-
+  const titleFromUrl = decodeURIComponent(name as string).trim().toLowerCase(); // ✅ decode and normalize
 
   const { data: TopUSData, isLoading: TopUSLoading } = useTopHeadlinesQuery({ country: "us" });
 
-  const filteredArticle = TopUSData?.articles?.find(
-  (article: articleAPiProps) =>
-    encodeURIComponent(article.title.trim().toLowerCase()) === titleFromUrl.toLowerCase()
-);
-
+  const filteredArticle = TopUSData?.articles?.find((article: articleAPiProps) =>
+    article?.title?.trim().toLowerCase() === titleFromUrl
+  );
 
   return (
     <div className="py-10">
       <div className="container mx-auto">
         {TopUSLoading ? (
           <Loader />
+        ) : filteredArticle ? (
+          <>
+            <FirstArticle
+              urlToImage={filteredArticle?.urlToImage}
+              name={filteredArticle?.source?.name}
+              title={filteredArticle?.title}
+              id={filteredArticle?.title}
+              publishedAt={filteredArticle?.publishedAt}
+              author={filteredArticle?.author}
+            />
+            <div className="py-5">
+              <p>{filteredArticle?.content}</p>
+              <p>{filteredArticle?.description}</p>
+            </div>
+          </>
         ) : (
-          <FirstArticle
-            urlToImage={filteredArticle?.urlToImage}
-            name={filteredArticle?.source.name}
-            title={filteredArticle?.title}
-            id={filteredArticle?.title}
-            publishedAt={filteredArticle?.publishedAt}
-            author={filteredArticle?.author}
-          />
+          <p className="text-center text-gray-500">Article not found.</p>
         )}
-        <div className="py-5">
-          <p>{filteredArticle?.content}</p>
-          <p>{filteredArticle?.description}</p>
-        </div>
       </div>
     </div>
   );
