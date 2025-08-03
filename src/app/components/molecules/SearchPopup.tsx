@@ -38,13 +38,16 @@ const SearchPopup = () => {
   return (
     <div>
       {/* Trigger input */}
-      <input
-        type="text"
-        placeholder="Search..."
-        onFocus={() => setIsOpen(true)}
-        disabled={isOpen}
-        className="border border-gray-300 px-4 py-2 rounded-md w-full md:w-64 focus:outline-none"
-      />
+      <div className="relative w-full md:w-64">
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
+        <input
+          type="text"
+          placeholder="Search..."
+          onFocus={() => setIsOpen(true)}
+          disabled={isOpen}
+          className="pl-10 pr-4 py-2 border border-gray-300 rounded-md w-full focus:outline-none"
+        />
+      </div>
       {/* overlay */}
       {isOpen && (
         <div

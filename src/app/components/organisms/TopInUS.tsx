@@ -4,10 +4,12 @@ import { articleAPiProps } from "@/app/types/Article";
 import Article from "../molecules/Article";
 import FirstArticle from "../molecules/FirstArticle";
 import Loader from "../atoms/Loader";
+import DataNotFound from "../atoms/DataNotFound";
 
 const TopInUS = () => {
-  const { data: TopUSData, isLoading: TopUSLoading } =
-    useTopHeadlinesQuery({ country: "us" })
+  const { data: TopUSData, isLoading: TopUSLoading, error } = useTopHeadlinesQuery({
+    country: "us",
+  });
   // console.log("data", TopUSData);
   return (
     <section className="container mx-auto py-10">
@@ -40,7 +42,7 @@ const TopInUS = () => {
             <Loader />
           ) : (
             TopUSData?.articles.map((article: articleAPiProps, index: number) =>
-              index > 0 && index < 6 ?  (
+              index > 0 && index < 6 ? (
                 <div
                   className="col-span-1"
                   key={article?.source.id + article?.title}
@@ -54,12 +56,12 @@ const TopInUS = () => {
                     publishedAt={article.publishedAt}
                   />
                 </div>
-              )
-              : null
+              ) : null
             )
           )}
         </div>
       </div>
+      {(TopUSData?.articles?.length === 0 || error) && <DataNotFound />}
     </section>
   );
 };
