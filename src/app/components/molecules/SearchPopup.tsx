@@ -2,13 +2,15 @@
 
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { Search } from "lucide-react"; // Optional icon
+import { Search } from "lucide-react";
+import gsap from "gsap";
 
 const SearchPopup = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState("");
   const router = useRouter();
   const popupRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   // Close on outside click
   useEffect(() => {
@@ -17,11 +19,11 @@ const SearchPopup = () => {
         setIsOpen(false);
       }
     };
+
     if (isOpen) {
       document.addEventListener("mousedown", handleClickOutside);
-    } else {
-      document.removeEventListener("mousedown", handleClickOutside);
     }
+
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
@@ -34,6 +36,43 @@ const SearchPopup = () => {
       setQuery("");
     }
   };
+
+  // GSAP animation
+useEffect(() => {
+  const el = popupRef.current;
+  if (!el) return;
+
+  if (isOpen) {
+    gsap.fromTo(
+      el,
+      { opacity: 0, scale: 0.95, y: -10 },
+      {
+        opacity: 1,
+        scale: 1,
+        y: 0,
+        duration: 0.4,
+        ease: "power2.inOut",
+        display: "block",
+        onComplete: () => {
+          // Focus the input AFTER animation is complete
+          inputRef.current?.focus();
+        },
+      }
+    );
+  } else {
+    gsap.to(el, {
+      opacity: 0,
+      scale: 0.8,
+      y: -10,
+      duration: 0.3,
+      ease: "power2.inOut",
+      onComplete: () => {
+        if (el) el.style.display = "none";
+      },
+    });
+  }
+}, [isOpen]);
+
 
   return (
     <div>
@@ -48,41 +87,42 @@ const SearchPopup = () => {
           className="pl-10 pr-4 py-2 border border-gray-300 rounded-md w-full focus:outline-none"
         />
       </div>
-      {/* overlay */}
-      {isOpen && (
-        <div
-          className="fixed inset-0 bg-black opacity-50 z-40"
-          onClick={() => setIsOpen(false)}
-        ></div>
-      )}
 
-      {/* Popup */}
-      {isOpen && (
-        <div className="container mx-auto">
-          <div
-            ref={popupRef}
-            className="fixed z-50 left-1/2 transform -translate-x-1/2  mt-2 w-full md:w-1/2 lg:w-1/3 bg-white border border-gray-200 rounded-md shadow-lg px-4 py-6"
-          >
-            <div className="flex items-center space-x-2">
-              <input
-                type="text"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-                autoFocus
-                placeholder="Type your search..."
-                className="flex-1 border border-gray-300 px-3 py-2 rounded-md focus:outline-none"
-              />
-              <button
-                onClick={handleSearch}
-                className="bg-gray-600 hover:bg-gray-700 text-white px-4 py-3 rounded-md cursor-pointer transition-all duration-200"
-              >
-                <Search className="w-4 h-4" />
-              </button>
-            </div>
+      {/* Overlay */}
+      <div
+        className={`fixed inset-0 z-40 transition-opacity ${
+          isOpen ? "opacity-50 bg-black" : "pointer-events-none opacity-0"
+        }`}
+        onClick={() => setIsOpen(false)}
+      />
+
+      {/* Popup (always rendered for GSAP control) */}
+      <div className="container mx-auto">
+        <div
+          ref={popupRef}
+          style={{ display: "none" }}
+          className="fixed z-50 left-1/2 top-20 transform -translate-x-1/2 w-full md:w-1/2 lg:w-1/3 bg-white border border-gray-200 rounded-md shadow-lg px-4 py-6"
+        >
+          <div className="flex items-center space-x-2">
+            <input
+              ref={inputRef}
+              type="text"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+              // autoFocus
+              placeholder="Type your search..."
+              className="flex-1 border border-gray-300 px-3 py-2 rounded-md focus:outline-none"
+            />
+            <button
+              onClick={handleSearch}
+              className="bg-gray-600 hover:bg-gray-700 text-white px-4 py-3 rounded-md transition duration-200"
+            >
+              <Search className="w-4 h-4" />
+            </button>
           </div>
         </div>
-      )}
+      </div>
     </div>
   );
 };
